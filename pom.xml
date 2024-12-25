@@ -24,7 +24,7 @@
             <version>4.27.0</version>
         </dependency>
 
-        <!-- JUnit -->
+        <!-- JUnit. -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

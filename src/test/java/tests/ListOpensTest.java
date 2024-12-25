@@ -1,10 +1,11 @@
+package tests;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import utils.BrowserFactory;
-
 import static org.junit.Assert.*;
 
 public class ListOpensTest {
@@ -17,7 +18,7 @@ public class ListOpensTest {
         // Читаем название браузера из системного свойства или другого источника конфигурации
         String browser = System.getProperty("browser", "chrome");
 
-        // Создаем драйвер с помощью фабрики браузеров
+        // Создаем драйвер с помощью фабрики браузеров.
         driver = BrowserFactory.createDriver(browser);
 
         // Максимизируем окно браузера
@@ -36,6 +37,8 @@ public class ListOpensTest {
     public void testAllAccordionPanelsVisibility() {
         // Переход на страницу списка
         driver.get("https://qa-scooter.praktikum-services.ru/");
+
+        accordionPage.clickCookieButton();
 
         // Количество элементов списка
         int totalElements = 8;

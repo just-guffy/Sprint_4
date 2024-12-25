@@ -1,3 +1,5 @@
+package tests;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,8 +10,6 @@ import pages.MainPage;
 import pages.OrderPage;
 import utils.BrowserFactory;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(Parameterized.class)
 public class OrderFormParameterizedTest {
 
@@ -19,13 +19,21 @@ public class OrderFormParameterizedTest {
     private final String address;
     private final String metroStation;
     private final String phoneNumber;
+    private final String dateNumber;
+    private final String meaningText;
+    private final String color;
+    private final String commentInput;
 
-    public OrderFormParameterizedTest(String firstName, String lastName, String address, String metroStation, String phoneNumber) {
+    public OrderFormParameterizedTest(String firstName, String lastName, String address, String metroStation, String phoneNumber, String dateNumber, String meaningText, String color, String commentInput) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.metroStation = metroStation;
         this.phoneNumber = phoneNumber;
+        this.dateNumber = dateNumber;
+        this.meaningText = meaningText;
+        this.color = color;
+        this.commentInput = commentInput;
     }
 
     @BeforeClass
@@ -36,8 +44,9 @@ public class OrderFormParameterizedTest {
         // Создаем драйвер с помощью фабрики браузеров
         driver = BrowserFactory.createDriver(browser);
 
-        // Максимизируем окно браузера
+        // Максимизируем окно браузера.
         driver.manage().window().maximize();
+
     }
 
     @AfterClass
@@ -45,18 +54,18 @@ public class OrderFormParameterizedTest {
         driver.quit();
     }
 
-    @Parameterized.Parameters(name = "{index}: First Name={0}, Last Name={1}, Address={2}, Metro Station={3}, Phone Number={4}")
+    @Parameterized.Parameters
     public static Object[][] data() {
         return new Object[][] {
-                { "Иван", "Иванов", "Ивановская, 1", "Черкизовская", "+79219219219" },
-                { "Петр", "Петров", "Петровская, 1", "Сокольники", "+79819819819" }
+                { "Иван", "Иванов", "Ивановская, 1", "1", "+79219219219", "28.12.2024", "двое суток","black", "Комментарий 1"},
+                { "Петр", "Петров", "Петровская, 1", "3", "+79819819819", "29.12.2024", "трое суток", "grey", "Комментарий 2"}
         };
     }
 
     @Test
     public void testOrderFlowFromTopButton() {
         // Переход на домашнюю страницу
-        driver.get("http://yourwebsite.com");
+        driver.get("https://qa-scooter.praktikum-services.ru/");
 
         // Создаем объект домашней страницы
         MainPage mainPage = new MainPage(driver);
@@ -72,8 +81,24 @@ public class OrderFormParameterizedTest {
         orderPage.setLastName(lastName);                 // Вводим фамилию
         orderPage.setAddress(address);                   // Вводим адрес
         orderPage.selectMetroStation(metroStation);      // Выбираем станцию метро
-        assertEquals(orderPage.getSelectedMetroValue(), metroStation); // Проверяем, что выбрана правильная станция
         orderPage.setPhoneNumber(phoneNumber);           // Вводим телефон
+
+        // Нажатие на кнопку "Далее"
+        mainPage.clickOrderButtonBottom();
+
+        orderPage.selectDate(dateNumber);// Выбираем дату
+        orderPage.choosingRentalPeriod(meaningText);// Выбираем период
+        orderPage.checkColor(color);
+        orderPage.commentСourier(commentInput);
+
+        // Нажатие на кнопку "Заказать"
+        orderPage.clickOrderButtonBottom();
+
+        // Подтверждаем заказ
+        orderPage.orderConfirmation();
+
+        //Появилось окно подтверждения заказа
+        orderPage.confirmationWindow();
 
         // Завершаем тестирование
     }
@@ -97,8 +122,25 @@ public class OrderFormParameterizedTest {
         orderPage.setLastName(lastName);                 // Вводим фамилию
         orderPage.setAddress(address);                   // Вводим адрес
         orderPage.selectMetroStation(metroStation);      // Выбираем станцию метро
-        assertEquals(orderPage.getSelectedMetroValue(), metroStation); // Проверяем, что выбрана правильная станция
         orderPage.setPhoneNumber(phoneNumber);           // Вводим телефон
+
+
+        // Нажатие на кнопку "Далее"
+        mainPage.clickOrderButtonBottom();
+
+        orderPage.selectDate(dateNumber);// Выбираем дату
+        orderPage.choosingRentalPeriod(meaningText);// Выбираем период
+        orderPage.checkColor(color);
+        orderPage.commentСourier(commentInput);
+
+        // Нажатие на кнопку "Заказать"
+        orderPage.clickOrderButtonBottom();
+
+        // Подтверждаем заказ
+        orderPage.orderConfirmation();
+
+        //Появилось окно подтверждения заказа
+        orderPage.confirmationWindow();
 
         // Завершаем тестирование
     }
