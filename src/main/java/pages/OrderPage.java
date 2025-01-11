@@ -21,9 +21,11 @@ public class OrderPage {
     private final By dateInput = By.xpath("//input[@placeholder='* Когда привезти самокат']");
     private final By rentalPeriod = By.xpath("//div[@class='Dropdown-control']");
     private final By commentInput = By.xpath("//input[@placeholder='Комментарий для курьера']");
-    private final By orderСonfirmationButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and contains(text(), 'Да')]");
+    private final By orderConfirmationButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and contains(text(), 'Да')]");
     private final By confirmationWindow = By.className("Order_ModalHeader__3FDaJ");
-    private final By orderButtonBottom = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and contains(text(), 'Заказать')]");
+    private final By orderButtonBottom = By.xpath("//div[@class='Home_FinishButton__1_cWm']/button[contains(text(), 'Заказать')]");
+    private final By theNextButton = By.xpath("//button[contains(text(), 'Далее')]");
+    private final By secondOrderButtonBottom = By.xpath("//div[@class='Order_Buttons__1xGrp']/button[contains(text(), 'Заказать')]");
 
     public OrderPage(WebDriver driver) {
         this.driver = driver;
@@ -115,14 +117,14 @@ public class OrderPage {
     }
 
     // Комментарий для курьера
-    public void commentСourier (String comment) {
+    public void commentCourier (String comment) {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(commentInput)); // Дожидаемся появления элемента
         element.sendKeys(comment); // Вводим данные
     }
 
     // Подтверждаем заказ
     public void orderConfirmation () {
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(orderСonfirmationButton)); // Дожидаемся доступности элемента для клика
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(orderConfirmationButton)); // Дожидаемся доступности элемента для клика
         element.click(); // Подтверждаем заказ
     }
 
@@ -139,4 +141,17 @@ public class OrderPage {
 
     }
 
+    // Метод для нажатия на нижнюю кнопку "Далее"
+    public void theNextButton() {
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(theNextButton)); // Дожидаемся доступности элемента для клика
+        element.click();
+
+    }
+
+    // Метод для нажатия на второй странице кнопку "Заказать"
+    public void secondOrderButtonBottom() {
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(secondOrderButtonBottom)); // Дожидаемся доступности элемента для клика
+        element.click();
+
+    }
 }

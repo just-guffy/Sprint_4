@@ -15,22 +15,24 @@ public class MainPage {
         this.driver = driver;
     }
 
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    public WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
     // Шаблонные локаторы для заголовков и панелей списка.
     private static final String ACCORDION_HEADING_TEMPLATE = "accordion__heading-%d";
     private static final String ACCORDION_PANEL_TEMPLATE = "accordion__panel-%d";
 
     // Локаторы кнопок "Заказать"
-    private final By orderButtonTop = By.cssSelector(".Button_Button__ra12g");
-    private final By orderButtonBottom = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
+    private final By orderButtonTop = By.xpath("//div[@class='Header_Nav__AGCXC']/button[contains(text(), 'Заказать')]");
+    private final By orderButtonBottom = By.xpath("//div[@class='Home_FinishButton__1_cWm']/button[contains(text(), 'Заказать')]");
 
     //Локатор кнопки "Куки"
     private final By cookieButton = By.className("App_CookieButton__3cvqF");
 
     // Метод для нажатия на кнопку "Куки"
     public void clickCookieButton() {
-        driver.findElement(cookieButton).click();
+        if (!driver.findElements(cookieButton).isEmpty()) { // Проверяем наличие элемента
+            driver.findElement(cookieButton).click(); // Нажимаем на элемент
+        }
     }
 
     // Метод для получения заголовка списка по индексу
@@ -43,20 +45,6 @@ public class MainPage {
     public WebElement getAccordionPanel(int index) {
         String id = String.format(ACCORDION_PANEL_TEMPLATE, index);
         return driver.findElement(By.id(id));
-    }
-
-    // Метод для проверки видимости панели после клика на заголовке
-    public boolean isPanelVisible(int index) {
-        WebElement heading = getAccordionHeading(index);
-        WebElement panel = getAccordionPanel(index);
-
-        // Ожидание до появления heading перед кликом
-        wait.until(ExpectedConditions.visibilityOf(heading));
-        heading.click();
-
-        // Ожидание до появления panel после клика
-        wait.until(ExpectedConditions.visibilityOf(panel));
-        return panel.isDisplayed();
     }
 
     // Метод для нажатия на верхнюю кнопку "Заказать"

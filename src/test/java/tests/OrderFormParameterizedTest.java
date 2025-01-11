@@ -83,16 +83,17 @@ public class OrderFormParameterizedTest {
         orderPage.selectMetroStation(metroStation);      // Выбираем станцию метро
         orderPage.setPhoneNumber(phoneNumber);           // Вводим телефон
 
+
         // Нажатие на кнопку "Далее"
-        mainPage.clickOrderButtonBottom();
+        orderPage.theNextButton();
 
         orderPage.selectDate(dateNumber);// Выбираем дату
         orderPage.choosingRentalPeriod(meaningText);// Выбираем период
         orderPage.checkColor(color);
-        orderPage.commentСourier(commentInput);
+        orderPage.commentCourier(commentInput);
 
         // Нажатие на кнопку "Заказать"
-        orderPage.clickOrderButtonBottom();
+        orderPage.secondOrderButtonBottom();
 
         // Подтверждаем заказ
         orderPage.orderConfirmation();
@@ -106,10 +107,13 @@ public class OrderFormParameterizedTest {
     @Test
     public void testOrderFlowFromBottomButton() {
         // Переход на домашнюю страницу
-        driver.get("http://yourwebsite.com");
+        driver.get("https://qa-scooter.praktikum-services.ru/");
 
         // Создаем объект домашней страницы
         MainPage mainPage = new MainPage(driver);
+
+        // Нажатие кнопки "Куки"
+        mainPage.clickCookieButton();
 
         // Нажатие на нижнюю кнопку "Заказать"
         mainPage.clickOrderButtonBottom();
@@ -126,15 +130,15 @@ public class OrderFormParameterizedTest {
 
 
         // Нажатие на кнопку "Далее"
-        mainPage.clickOrderButtonBottom();
+        orderPage.theNextButton();
 
         orderPage.selectDate(dateNumber);// Выбираем дату
         orderPage.choosingRentalPeriod(meaningText);// Выбираем период
         orderPage.checkColor(color);
-        orderPage.commentСourier(commentInput);
+        orderPage.commentCourier(commentInput);
 
         // Нажатие на кнопку "Заказать"
-        orderPage.clickOrderButtonBottom();
+        orderPage.secondOrderButtonBottom();
 
         // Подтверждаем заказ
         orderPage.orderConfirmation();
